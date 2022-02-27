@@ -10,9 +10,9 @@ namespace UtilityCloudChallenge
 
         public int SumThreeClosest(int[] numbers, int target, bool recursive = true)
         {
+            Sums.Clear();
             if (recursive)
             {
-                //Sums = new List<int>();
                 CalculateSumsRecursive(numbers);
             }
             else
@@ -47,11 +47,11 @@ namespace UtilityCloudChallenge
         }
 
         /* Recursive */
-        private static void CalculateSumsRecursive(int[] numbers, List<int> indexList = null)
+        private static void CalculateSumsRecursive(int[] numbers, List<int> indexList = null, int currentIndex = 0 )
         {
             indexList ??= new List<int>();
 
-            for (int i = 0; i < numbers.Length; i++)
+            for (int i = 0; i < numbers.Length && currentIndex < numbers.Length; i++)
             {
                 if (indexList.Contains(i))
                 {
@@ -61,11 +61,12 @@ namespace UtilityCloudChallenge
                 if (indexList.Count == 2)
                 {
                     Sums.Add(numbers[i] + numbers[indexList[0]] + numbers[indexList[1]]);
+                    CalculateSumsRecursive(numbers, new List<int>(), currentIndex++);
                 }
                 else
                 {
                     indexList.Add(i);
-                    CalculateSumsRecursive(numbers, indexList);
+                    CalculateSumsRecursive(numbers, indexList, currentIndex);
                 }
             }
         }
