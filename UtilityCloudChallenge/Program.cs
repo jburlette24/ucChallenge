@@ -12,8 +12,6 @@ namespace UtilityCloudChallenge
             int target = 1;
             Console.WriteLine($"Result: {UtilityCloudChallenge.SumFinder.SumThreeClosest(numbers, target)}");
         }
-
-
     }
 }
 
