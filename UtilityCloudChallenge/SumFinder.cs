@@ -6,20 +6,19 @@ namespace UtilityCloudChallenge
 {
     public class SumFinder
     {
-        private static List<int> Sums = new List<int>();
 
         public int SumThreeClosest(int[] numbers, int target, bool recursive = true)
         {
-            Sums.Clear();
+            var sums = new List<int>();
             if (recursive)
             {
-                CalculateSumsRecursive(numbers);
+                CalculateSumsRecursive(numbers, sums, 0, null);
             }
             else
             {
-                Sums = CalculateSums(numbers);
+                sums = CalculateSums(numbers);
             }
-            return Sums.OrderBy(sum => Math.Abs(target - sum)).First();
+            return sums.OrderBy(sum => Math.Abs(target - sum)).First();
         }
 
         /*Nested Loops*/
@@ -47,11 +46,11 @@ namespace UtilityCloudChallenge
         }
 
         /* Recursive */
-        private static void CalculateSumsRecursive(int[] numbers, List<int> indexList = null, int currentIndex = 0 )
+        private static void CalculateSumsRecursive(int[] numbers, List<int> sums, int currentIndex, List<int> indexList = null)
         {
             indexList ??= new List<int>();
 
-            for (int i = 0; i < numbers.Length && currentIndex < numbers.Length; i++)
+            for (int i = 0; i < numbers.Length; i++)
             {
                 if (indexList.Contains(i))
                 {
@@ -60,13 +59,26 @@ namespace UtilityCloudChallenge
 
                 if (indexList.Count == 2)
                 {
-                    Sums.Add(numbers[i] + numbers[indexList[0]] + numbers[indexList[1]]);
-                    CalculateSumsRecursive(numbers, new List<int>(), currentIndex++);
+                    sums.Add(numbers[i] + numbers[indexList[0]] + numbers[indexList[1]]);
+                    if (currentIndex < numbers.Length)
+                    {
+                        CalculateSumsRecursive(numbers, sums, currentIndex + 1, new List<int> { currentIndex });
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
                 else
                 {
                     indexList.Add(i);
-                    CalculateSumsRecursive(numbers, indexList, currentIndex);
+                    if (currentIndex < numbers.Length)
+                    {
+                        CalculateSumsRecursive(numbers, sums, currentIndex, new List<int>(indexList));
+                    }else
+                    {
+                        return;
+                    }
                 }
             }
         }
