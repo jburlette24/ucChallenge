@@ -1,7 +1,7 @@
 # ucChallenge
 This project solves the following problem:
 
-Given an integer array of length n and an integer target, find the three integers in the array whose sum
+Given an integer array of length _n_ and an integer target, find the three integers in the array whose sum
 is closest to the target.
 
 ## Rules
