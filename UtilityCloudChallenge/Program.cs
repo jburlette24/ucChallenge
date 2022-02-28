@@ -10,9 +10,7 @@ namespace UtilityCloudChallenge
         {
             int[] numbers = { -1, 2, 1, 4 };
             int target = 1;
-
-            var sumFinder = new UtilityCloudChallenge.SumFinder();
-            Console.WriteLine($"Result: {sumFinder.SumThreeClosest(numbers, target)}");
+            Console.WriteLine($"Result: {UtilityCloudChallenge.SumFinder.SumThreeClosest(numbers, target)}");
         }
 
 
